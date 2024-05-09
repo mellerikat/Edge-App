@@ -13,7 +13,7 @@ services:
       retries: 5
 
   navigator:
-    image: ean_torizon:latest # 856124245140.dkr.ecr.ap-northeast-2.amazonaws.com/ean_torizon:latest
+    image: 856124245140.dkr.ecr.ap-northeast-2.amazonaws.com/ean_torizon:latest
     container_name: navigator
     depends_on:
       redis:
