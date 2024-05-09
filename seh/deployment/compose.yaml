@@ -13,7 +13,7 @@ services:
       retries: 5
 
   navigator:
-    image: 856124245140.dkr.ecr.ap-northeast-2.amazonaws.com/ean_torizon:latest
+    image: ean_torizon:latest # 856124245140.dkr.ecr.ap-northeast-2.amazonaws.com/ean_torizon:latest
     container_name: navigator
     depends_on:
       redis:
@@ -56,6 +56,7 @@ services:
       - iomanager_to_alo_mount:/mount/iomanager_to_alo/input
       - iomanager_to_alo_model_mount:/mount/iomanager_to_alo/model 
       - alo_to_iomanager_mount:/mount/alo_to_iomanager/output
+      - iomanager_mount:/IOManager/config 
       - /etc/splunk/splunkiotpuck:/etc/splunk/splunkiotpuck
     devices:
       - /dev/video0:/dev/video0
@@ -84,6 +85,7 @@ services:
       - alo_to_iomanager_mount:/mount/alo_to_iomanager/output
       - /home/torizon/.aws:/root/.aws
       - iomanager_output_mount:/data/output
+      - controller_mount:/Controller/config 
 
 volumes:  # 여기에 볼륨 섹션을 추가합니다.
   iomanager_mount:
