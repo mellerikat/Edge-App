@@ -27,7 +27,7 @@ services:
       - /home/torizon/data/input:/data/input
       - /home/torizon/data/output:/data/output
       - iomanager_mount:/mount/IOManager/config
-      - controller_mount:/mount/Controller/config
+      - controller_save_mount:/mount/Controller/config
       - /var/run/docker.sock:/var/run/docker.sock # Navigator 안에서 docker 명령어 사용하기위해 
 
   iomanager:
@@ -84,7 +84,7 @@ services:
       - alo_to_iomanager_mount:/mount/alo_to_iomanager/output
       - /home/torizon/.aws:/root/.aws
       - iomanager_output_mount:/data/output
-      - controller_mount:/Controller/config 
+      - controller_save_mount:/Controller/config 
 
 volumes:  # 여기에 볼륨 섹션을 추가합니다.
   iomanager_mount:
@@ -95,4 +95,4 @@ volumes:  # 여기에 볼륨 섹션을 추가합니다.
   iomanager_to_alo_mount:
   iomanager_to_alo_model_mount:
   alo_to_iomanager_mount:
-  controller_mount:
+  controller_save_mount:
