@@ -3,6 +3,7 @@ version: '3'
 services:
   redis:
     image: 856124245140.dkr.ecr.ap-northeast-2.amazonaws.com/redis:v2.3.0
+    container_name: redis
     ports:
       - "6379:6379"
     healthcheck:                      # 헬스체크 추가
@@ -10,8 +11,28 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  navigator:
+    image: 856124245140.dkr.ecr.ap-northeast-2.amazonaws.com/ean_torizon:latest
+    container_name: navigator
+    depends_on:
+      redis:
+        condition: service_healthy
+    command: ["python3", "./main.py"]
+    network_mode: host
+    privileged: true
+    tty: true
+    stdin_open: true
+    volumes:
+      - /home/torizon/data/input:/data/input
+      - /home/torizon/data/output:/data/output
+      - iomanager_mount:/mount/IOManager/config
+      - controller_mount:/mount/Controller/config
+      - /var/run/docker.sock:/var/run/docker.sock # Navigator 안에서 docker 명령어 사용하기위해 
+
   iomanager:
     image: 856124245140.dkr.ecr.ap-northeast-2.amazonaws.com/iomanager_torizon:v2.3.0
+    container_name: iomanager
     depends_on:
       redis:
         condition: service_healthy   # Redis가 healthy 상태일 때 시작
@@ -43,6 +64,7 @@ services:
       - /dev/video3:/dev/video3
   controller:
     image: 856124245140.dkr.ecr.ap-northeast-2.amazonaws.com/controller_torizon:v2.3.0
+    container_name: controller
     depends_on:
       redis:
         condition: service_healthy   # Redis가 healthy 상태일 때 시작
