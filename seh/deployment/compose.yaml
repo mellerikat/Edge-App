@@ -24,7 +24,8 @@ services:
       - PYTHONUNBUFFERED=1
       - REDIS_HOST=redis  # app 컨테이너 내부에서 사용할 환경 변수 설정
       - REDIS_PORT=6379
-      - EDGEAPP_SENSOR_NAME=${EDGEAPP_SENSOR_NAME}
+      - EDGEAPP_SENSOR_NAME=inference_manual_trigger
+      #- EDGEAPP_SENSOR_NAME=${EDGEAPP_SENSOR_NAME}
     # restart: on-failure
     volumes:
       - /usr/lib/python3.10/site-packages:/usr/lib/python3.10/site-packages
