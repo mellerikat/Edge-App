@@ -1,0 +1,100 @@
+version: '3'
+
+services:
+  redis:
+    image: 856124245140.dkr.ecr.ap-northeast-2.amazonaws.com/redis:v1
+    ports:
+      - "6379:6379"
+    healthcheck:                      # 헬스체크 추가
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  navigator:
+    image: 856124245140.dkr.ecr.ap-northeast-2.amazonaws.com/ean_torizon:latest
+    depends_on:
+      redis:
+        condition: service_healthy
+    network_mode: host
+    privileged: true
+    tty: true
+    stdin_open: true
+    volumes:
+      - /home/torizon/data/input:/data/input
+      - /home/torizon/data/output:/data/output
+      # - /home/torizon/mount/Controller/config:/Controller/config
+      # - /home/torizon/mount/IOManager/config:/IOManager/config
+      # - /home/torizon/mount:/mount
+      - iomanager_mount:/mount/IOManager/config
+      - controller_mount:/mount/Controller/config
+      - /var/run/docker.sock:/var/run/docker.sock # Navigator 안에서 docker 명령어 사용하기위해 
+
+  iomanager:
+    image: 856124245140.dkr.ecr.ap-northeast-2.amazonaws.com/iomanager_torizon:v7
+    depends_on:
+      redis:
+        condition: service_healthy   # Redis가 healthy 상태일 때 시작
+    command: ["python3", "./main.py", "--type", "container", "--mode", "seh", "--sim"] # , "False"]
+    network_mode: host
+    privileged: true
+    tty: true
+    stdin_open: true
+    environment:
+      - PYTHONUNBUFFERED=1
+      - REDIS_HOST=redis  # app 컨테이너 내부에서 사용할 환경 변수 설정
+      - REDIS_PORT=6379
+    # restart: on-failure
+    volumes:
+      - /usr/lib/python3.10/site-packages:/usr/lib/python3.10/site-packages
+      - /usr/bin/splunk/splunkiotpuck:/usr/bin/splunk/splunkiotpuck
+      - iomanager_input_mount:/data/input
+      - iomanager_output_mount:/data/output
+      # - /Controller/config:/home/torizon/mount/Controller/config
+      # - /IOManager/config:/home/torizon/mount/IOManager/config
+      #- /home/torizon/work/simulator-main/edgeapp/src/IOManager:/IOManager
+      - /home/torizon/workspace/edgeapp/src/IOManager:/IOManager 
+      #- iomanager_work_mount:/workspace
+      #- iomanager_config_mount:/IOManager/config
+      - iomanager_to_alo_mount:/mount/iomanager_to_alo/inference_data
+      - iomanager_to_alo_model_mount:/mount/iomanager_to_alo/model 
+      - alo_to_iomanager_mount:/mount/alo_to_iomanager/output
+      #- git_mount:/usr
+    devices:
+      - /dev/video0:/dev/video0
+      - /dev/video1:/dev/video1
+      - /dev/video2:/dev/video2
+      - /dev/video3:/dev/video3
+  controller:
+    image: 856124245140.dkr.ecr.ap-northeast-2.amazonaws.com/controller_torizon:v2.3.0
+    depends_on:
+      redis:
+        condition: service_healthy   # Redis가 healthy 상태일 때 시작
+    #command: ["python3", "./main.py"] # , "False"]
+    command: sh -c 'python3 ./main.py'
+    network_mode: host
+    privileged: true
+    tty: true
+    stdin_open: true
+    environment:
+      - REDIS_HOST=redis  # app 컨테이너 내부에서 사용할 환경 변수 설정
+      - REDIS_PORT=6379
+    # restart: on-failure
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - iomanager_output_mount:/data/output
+      - iomanager_to_alo_model_mount:/mount/iomanager_to_alo/model
+      - alo_to_iomanager_mount:/mount/alo_to_iomanager/output
+      - /home/torizon/.aws:/root/.aws
+
+volumes:  # 여기에 볼륨 섹션을 추가합니다.
+  iomanager_mount:
+  iomanager_work_mount:
+  iomanager_input_mount:
+  iomanager_output_mount:
+  iomanager_config_mount:
+  iomanager_to_alo_mount:
+  iomanager_to_alo_model_mount:
+  alo_to_iomanager_mount:
+  controller_mount:
+  git_mount:
