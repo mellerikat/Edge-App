@@ -1,9 +1,4 @@
-# Edge App
-
-<div align="right">Updated 2024.05.05</div>
-
-## What is Edge App
-
+# Welcome to Edge App !
 Edge App is an application installed on various devices to perform inference functions of AI models.
 
 ### Features
@@ -20,4 +15,5 @@ Edge App detects and handles issues or errors that may occur during the inferenc
 #### Transmitting Data to Edge Conductor
 The results of inferences or other critical information are sent to Edge Conductor. Edge Conductor manages communication and data flow between multiple devices, allowing centralized management of inference results and facilitating collaboration across various devices.
 
-Edge App enables devices to utilize AI models locally, saving network bandwidth and providing efficient solutions for situations requiring real-time responses.
+# User Guide
+- [Release note](https://mellerikat.com/user_guide/ai_operator_guide/edge_app/release)
