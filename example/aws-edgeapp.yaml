@@ -1,0 +1,29 @@
+# mellerikat-dev
+env:
+  type: aws
+  cluster: eks-an2-meerkat-dev-eks-master                                                     
+  edgeapp_node: ng-an2-meerkat-ws-edge-app-t3-medium                                                                                           
+  alo_node: ng-an2-edgeapp-meerkat-standard 
+  alo_memory: 6500Mi
+  storage: s3-an2-meerkat-dev-meerkat
+  controller_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/ecr-repo-an2-meerkat-dev/edgeapp/amd/controller:3.4.0
+  iomanager_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/ecr-repo-an2-meerkat-dev/edgeapp/amd/iomanager:3.4.0
+  redis_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/ecr-repo-an2-meerkat-dev/edgeapp/amd/redis:v7.2.3
+  namespace: edge-app                                                                        
+  serviceaccount: edge-app
+
+pv:
+  pv_enable: True
+
+conductor:
+  host: edgecond.meerkat-dev.com
+  http_protocol: https
+  port: 443
+  wsprotocol: wss
+appinfo:
+  data_input_path: edgeapp_test/input
+  data_ouput_path: edgeapp_test/output
+  data_input_policy: copy #'move','copy'
+  data_save_policy: add_utc #'overwrite','add_utc','add_date'
+  enable_result_to_edgecond: True
+  Note: aws-test-edgeapp

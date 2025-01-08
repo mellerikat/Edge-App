@@ -1,0 +1,8 @@
+global:
+  is_gcp: True
+
+  env:
+    namespace: edge-app
+    serviceaccount: edge-app                                                                    
+      
+ 
