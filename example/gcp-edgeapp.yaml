@@ -1,0 +1,36 @@
+# auditdx gcp
+env:
+  type: gcp
+  cluster: gcp                                                  
+  edgeapp_node:                                                                                          
+  alo_node: 
+  alo_memory: 6500Mi
+  storage: pjt-lge-audixdx-prd-crad
+  controller_image_address: asia-northeast3-docker.pkg.dev/pjt-lge-auditdx/edgeapp/amd/controller:3.4.0
+  iomanager_image_address: asia-northeast3-docker.pkg.dev/pjt-lge-auditdx/edgeapp/amd/iomanager:3.4.0
+  redis_image_address: asia-northeast3-docker.pkg.dev/pjt-lge-auditdx/edgeapp/amd/redis:v7.2.3
+  namespace: edge-app-auditdx-ws                                                                        
+  serviceaccount: edge-app-auditdx                                                                                                                                    
+    
+pv:
+  pv_enable: False
+
+conductor:
+  host: edgecond-web.aia-kic.intellytics.lge.com
+  http_protocol: https
+  port: 443
+  wsprotocol: wss
+  
+appinfo:
+  data_input_path: edgeapp_test/input/
+  data_ouput_path: edgeapp_test/output/
+  data_input_policy: copy #'move','copy'
+  data_save_policy: add_utc #'overwrite','add_utc','add_date'
+  enable_result_to_edgecond: False
+  Note: 엣지앱 helm test
+  enable_ecr_token: True
+
+
+
+
+

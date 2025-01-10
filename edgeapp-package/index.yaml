@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  edgeapp-manifest:
+  - apiVersion: v2
+    appVersion: 3.4.0
+    created: "2025-01-08T16:08:44.920722205+09:00"
+    description: A EdgeApp Helm chart for Kubernetes
+    digest: c93156f10d80118a7a9672de4855638e018af197f97cfc90c81c891e3f11e4e1
+    name: edgeapp-manifest
+    type: application
+    urls:
+    - http://mod.lge.com/hub/dxadvtech/edge-platform/edge-manifest/-/tree/main/edge-chart/edgeapp-package/edgeapp-package/edgeapp-manifest-3.4.0.tgz
+    version: 3.4.0
+generated: "2025-01-08T16:08:44.919748883+09:00"

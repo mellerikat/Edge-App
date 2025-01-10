@@ -1,0 +1,13 @@
+# mellerikat-dev
+global:
+  is_aws: True
+  cluster_set: True #AIP 경우 Namespace별로 셋팅을 해야할때 False 처리후 재사용
+
+  env:
+    namespace: edge-app
+    serviceaccount: edge-app                                                                    
+      
+  pv:
+    pv_enable: True
+    volumeHandle: fs-00d1a56d4cf70cbcd 
+ 
