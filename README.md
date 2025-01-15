@@ -53,12 +53,12 @@
 
 
     ```bash 
-        helm install init ./setup-pacakge/edgeapp-setup-[버전정보].tgz-f [namespace_setting_file] 
+        helm install init-edgeapp ./setup-pacakge/edgeapp-setup-[버전정보].tgz-f [namespace_setting_file] -n {namespace}
     ```
 
     (ex)
     ```bash
-        helm install init ./setup-pacakge/edgeapp-setup-1.0.0.tgz -f example/aws-setup-for-each-namespace.yaml
+        helm install init-edgeapp ./setup-pacakge/edgeapp-setup-1.0.0.tgz -f example/aws-setup-for-each-namespace.yaml -n {namespace}
     ```
 - 환경에 따라 맞는 하나의 예제파일을 선택해서 수정후 -f 옵션 뒤에  넣는다 
     - example/aws-setup-for-each-namespace.yaml
@@ -88,12 +88,12 @@
  - #### 1. Edgeapp 설치
 
     ```bash
-    helm install [edgeapp이름] ./edgeapp-package/edgeapp-manifest-[버전정보].tgz -f example/aws-edgeapp.yaml
+    helm install [edgeapp이름] ./edgeapp-package/edgeapp-manifest-[버전정보].tgz -f example/aws-edgeapp.yaml -n {namespace}
     ```
     (ex)
     ```bash
-    helm install edgeapp-1 ./edgeapp-package/edgeapp-manifest-3.4.0.tgz -f example/aws-edgeapp-1.yaml
-    helm install edgeapp-2 ./edgeapp-package/edgeapp-manifest-3.4.0.tgz -f example/aws-edgeapp-2.yaml
+    helm install edgeapp-1 ./edgeapp-package/edgeapp-manifest-3.4.0.tgz -f example/aws-edgeapp-1.yaml -n {namespace}
+    helm install edgeapp-2 ./edgeapp-package/edgeapp-manifest-3.4.0.tgz -f example/aws-edgeapp-2.yaml -n {namespace}
     ```
 
     -  환경에 따라 맞는 하나의 예제파일을 선택해서 수정후 -f 옵션 뒤에  넣는다 
