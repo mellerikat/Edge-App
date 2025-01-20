@@ -149,12 +149,12 @@
  - #### 5.Helm 설정정보 업데이트 
 
     ```bash
-    helm upgrade [edgeapp이름] ./edgeapp-package/edgeapp-manifest-[버전명].tgz 
+    helm upgrade [edgeapp이름] ./edgeapp-package/edgeapp-manifest-[버전명].tgz -n {namespace}
     ```
 
 - #### 6. Alo삭제 
     ```bash
-    kubectl delete pod [alo pod 이름]
+    kubectl delete pod [alo pod 이름] -n {namespace}
     ```
 
 ### **5. Edge conductor 상에서 확인 후 사용**
