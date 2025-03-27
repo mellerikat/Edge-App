@@ -6,8 +6,8 @@ env:
   alo_node: ng-an2-edgeapp-meerkat-standard 
   alo_memory: 6500Mi
   storage: s3-an2-meerkat-dev-meerkat
-  controller_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/controller:3.4.1
-  iomanager_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/iomanager:3.4.1
+  controller_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/controller:3.5.0
+  iomanager_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/iomanager:3.5.0
   redis_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/redis:v7.2.3
   namespace: edge-app                                                                        
   serviceaccount: edge-app
@@ -21,8 +21,8 @@ conductor:
   port: 443
   wsprotocol: wss
 appinfo:
-  data_input_path: edgeapp_test/input
-  data_ouput_path: edgeapp_test/output
+  data_input_path: test/input
+  data_ouput_path: test/output
   data_input_policy: copy #'move','copy'
   data_save_policy: add_utc #'overwrite','add_utc','add_date'
   enable_result_to_edgecond: True

@@ -6,9 +6,9 @@ env:
   alo_node: 
   alo_memory: 6500Mi
   storage: pjt-lge-audixdx-prd-crad
-  controller_image_address: asia-northeast3-docker.pkg.dev/pjt-lge-auditdx/edgeapp/amd/controller:3.4.0
-  iomanager_image_address: asia-northeast3-docker.pkg.dev/pjt-lge-auditdx/edgeapp/amd/iomanager:3.4.0
-  redis_image_address: asia-northeast3-docker.pkg.dev/pjt-lge-auditdx/edgeapp/amd/redis:v7.2.3
+  controller_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/controller:3.5.0
+  iomanager_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/iomanager:3.5.0
+  redis_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/redis:v7.2.3
   namespace: edge-app-auditdx-ws                                                                        
   serviceaccount: edge-app-auditdx                                                                                                                                    
     

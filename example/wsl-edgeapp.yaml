@@ -6,10 +6,10 @@ env:
   alo_node: 
   alo_memory: 500Mi
   storage: 
-  controller_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/ecr-repo-an2-meerkat-dev/edgeapp/amd/controller:3.4.0
-  iomanager_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/ecr-repo-an2-meerkat-dev/edgeapp/amd/iomanager:3.4.0
-  edgeviewer_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/fast_viewer:3.4.0
-  redis_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/ecr-repo-an2-meerkat-dev/edgeapp/amd/redis:v7.2.3                                                                                                                                 
+  controller_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/controller:3.5.0
+  iomanager_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/iomanager:3.5.0
+  redis_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/redis:v7.2.3
+  edgeviewer_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/fast_viewer:3.4.0                                                                                                                               
     
 pv:
   pv_enable: False
