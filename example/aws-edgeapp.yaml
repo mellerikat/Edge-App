@@ -27,3 +27,4 @@ appinfo:
   data_save_policy: add_utc #'overwrite','add_utc','add_date'
   enable_result_to_edgecond: True
   Note: aws-test-edgeapp
+  #serial_id: meerkat_dev_edgeapp_test #aws-eks-namespace-edgeappname(~64byte)
