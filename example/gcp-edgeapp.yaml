@@ -1,36 +1,39 @@
-# auditdx gcp
+# gcp edgeapp
 env:
   type: gcp
-  cluster: gcp                                                  
-  edgeapp_node:                                                                                          
-  alo_node: 
+  cluster: edgeapp-cluster
+  edgeapp_node: edgeapp # autopilot 일 경우 빈 공간
+  alo_node: alo # autopilot 일 경우 빈 공간
   alo_memory: 6500Mi
-  storage: pjt-lge-audixdx-prd-crad
-  controller_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/controller:3.5.0
-  iomanager_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/iomanager:3.5.0
+  storage: cloud-storage-dev-meerkat
+  controller_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/controller:3.6.0-rc.1
+  iomanager_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/iomanager:3.6.0-rc.1
   redis_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/redis:v7.2.3
-  namespace: edge-app-auditdx-ws                                                                        
-  serviceaccount: edge-app-auditdx                                                                                                                                    
-    
+  namespace: gke-edge-app
+  serviceaccount: gke-edge-app
+
 pv:
   pv_enable: False
 
 conductor:
-  host: edgecond-web.aia-kic.intellytics.lge.com
-  http_protocol: https
-  port: 443
-  wsprotocol: wss
+  host: svc-edgecond-internal.edge-conductor
+  http_protocol: http
+  port: 31020
+  wsprotocol: ws
+
   
 appinfo:
-  data_input_path: edgeapp_test/input/
-  data_ouput_path: edgeapp_test/output/
+  data_input_path: gcp_test/input/
+  data_ouput_path: gcp_test/output/
   data_input_policy: copy #'move','copy'
   data_save_policy: add_utc #'overwrite','add_utc','add_date'
   enable_result_to_edgecond: False
-  Note: 엣지앱 helm test
+  Note: gcp-edgeapp-test
   enable_ecr_token: True
 
-
-
-
-
+cronjob:
+  bitnami_image_address: asia-northeast3-docker.pkg.dev/nimble-sight-450802-a0/gcr-edgeapp-test/bitnami-kubectl:1.32.3
+  schedule: "* * * * *"
+  gke_nodepool: pool-2
+  gcp_project_id: "nimble-sight-450802-a0"
+  gcp_region: "asia-northeast3-c"

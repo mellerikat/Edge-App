@@ -6,19 +6,19 @@ env:
   alo_node: 
   alo_memory: 500Mi
   storage: 
-  controller_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/controller:3.5.0
-  iomanager_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/iomanager:3.5.0
+  controller_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/controller:3.6.0
+  iomanager_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/iomanager:3.6.0
   redis_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/redis:v7.2.3
-  edgeviewer_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/fast_viewer:3.4.0                                                                                                                               
+  edgeviewer_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/fast_viewer:3.6.0                                                                                                                               
     
 pv:
   pv_enable: False
 
 conductor:
-  host: edgecond-web.aia-kic.intellytics.lge.com
-  http_protocol: https
-  port: 443
-  wsprotocol: wss
+  host: svc-edgecond-internal.edge-conductor
+  http_protocol: http
+  port: 31020
+  wsprotocol: ws
   
 appinfo:
   data_input_path: edgeapp_test/input/

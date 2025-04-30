@@ -6,8 +6,8 @@ env:
   alo_node: ng-an2-edgeapp-meerkat-standard 
   alo_memory: 6500Mi
   storage: s3-an2-meerkat-dev-meerkat
-  controller_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/controller:3.5.0
-  iomanager_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/iomanager:3.5.0
+  controller_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/controller:3.6.0
+  iomanager_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/iomanager:3.6.0
   redis_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/redis:v7.2.3
   namespace: edge-app                                                                        
   serviceaccount: edge-app
@@ -16,15 +16,19 @@ pv:
   pv_enable: True
 
 conductor:
-  host: edgecond.meerkat-dev.com
-  http_protocol: https
-  port: 443
-  wsprotocol: wss
+  host: svc-edgecond-internal.edge-conductor
+  http_protocol: http
+  port: 31020
+  wsprotocol: ws
+
 appinfo:
   data_input_path: test/input
   data_ouput_path: test/output
   data_input_policy: copy #'move','copy'
   data_save_policy: add_utc #'overwrite','add_utc','add_date'
-  enable_result_to_edgecond: True
+  enable_result_to_edgecond: False
   Note: aws-test-edgeapp
   #serial_id: meerkat_dev_edgeapp_test #aws-eks-namespace-edgeappname(~64byte)
+cronjob:
+  bitnami_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/bitnami-kubectl:1.32.3
+  schedule: "* * * * *"
