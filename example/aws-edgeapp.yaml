@@ -1,4 +1,4 @@
-# mellerikat-dev
+# aws-edgeapp.yaml
 env:
   type: aws
   cluster: eks-an2-meerkat-dev-eks-master                                                     
@@ -29,6 +29,8 @@ appinfo:
   enable_result_to_edgecond: False
   Note: aws-test-edgeapp
   #serial_id: meerkat_dev_edgeapp_test #aws-eks-namespace-edgeappname(~64byte)
+
 cronjob:
-  bitnami_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/bitnami-kubectl:1.32.3
-  schedule: "* * * * *"
+  base_image: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/bitnami-kubectl:1.32.3
+  onSchedule: "50 23 12 4 *"
+  offSchedule: "50 23 12 4 *"

@@ -1,4 +1,4 @@
-# gcp edgeapp
+# gcp-edgeapp.yaml
 env:
   type: gcp
   cluster: edgeapp-cluster
@@ -12,6 +12,10 @@ env:
   namespace: gke-edge-app
   serviceaccount: gke-edge-app
 
+ecr:
+  token_renewable: true
+  image_host: https://339713051385.dkr.ecr.ap-northeast-2.amazonaws.com
+
 pv:
   pv_enable: False
 
@@ -21,7 +25,6 @@ conductor:
   port: 31020
   wsprotocol: ws
 
-  
 appinfo:
   data_input_path: gcp_test/input/
   data_ouput_path: gcp_test/output/
@@ -32,8 +35,22 @@ appinfo:
   enable_ecr_token: True
 
 cronjob:
-  bitnami_image_address: asia-northeast3-docker.pkg.dev/nimble-sight-450802-a0/gcr-edgeapp-test/bitnami-kubectl:1.32.3
-  schedule: "* * * * *"
-  gke_nodepool: pool-2
+  base_image: asia-northeast3-docker.pkg.dev/nimble-sight-450802-a0/gcr-edgeapp-test/alpine/k8s:1.30.12
+  onSchedule: "50 23 12 4 *"
+  offSchedule: "50 23 12 4 *"
   gcp_project_id: "nimble-sight-450802-a0"
   gcp_region: "asia-northeast3-c"
+  gcp_aws_role: arn:aws:iam::339713051385:role/role-gke-an3-auditdx-dev-gke-edge-app-sa
+  edgeapp_cronjob_ecr_secret: edgeapp-cronjob-ecr-secret-helm
+  ecr_token_command: |
+    curl -k -X POST https://kubernetes.default.svc/api/v1/namespaces/{namespace}/serviceaccounts/{serviceaccount}/token \
+            -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" \
+            -H "Content-Type: application/json" \
+            --data '{"apiVersion": "authentication.k8s.io/v1", "kind": "TokenRequest", "spec": { "audiences": ["sts.amazonaws.com"], "expirationSeconds": 3600 }}' \
+            --cacert /var/run/secrets/kubernetes.io/serviceaccount/ca.crt \
+            > /home/response.json && \
+          token=$(grep -o '"token": *"[^"]*"' /home/response.json | sed 's/"token": *"//g' | sed 's/"//g') && \
+          echo "$token" > /home/token && \
+          ECR_TOKEN="$(aws ecr get-login-password --region ${AWS_REGION})" && \
+          kubectl delete secret --ignore-not-found {edgeapp_cronjob_ecr_secret} -n {namespace} && \
+          kubectl create secret docker-registry {edgeapp_cronjob_ecr_secret} --docker-server={image_host} --docker-username=AWS --docker-password=${ECR_TOKEN} --namespace={namespace}
