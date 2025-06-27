@@ -1,0 +1,42 @@
+# linux-edgeapp.yaml
+env:
+  type: linux
+  cluster: k3s
+  controller_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/controller:3.7.0
+  iomanager_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/iomanager:3.7.0
+  redis_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/redis:v7.2.3
+  
+  namespace: default
+  serviceaccount: edge-app
+
+ecr:
+  token_renewable: true
+  image_host: https://339713051385.dkr.ecr.ap-northeast-2.amazonaws.com
+
+pv:
+  pv_enable: True
+
+conductor:
+  host: edgecond.mellerikat-dev.com
+  http_protocol: https
+  port: 443
+  wsprotocol: wss
+
+appinfo:
+  data_input_path: linux_test/input
+  data_output_path: linux_test/output
+  data_input_policy: copy #'move','copy'
+  data_save_policy: add_utc #'overwrite','add_utc','add_date'
+  enable_result_to_edgecond: True
+  Note: linux-edgeapp-test
+  host_path: /home
+
+
+cronjob:
+  suspend: true
+  base_image: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/alpine/k8s:1.30.12
+  edgeapp_cronjob_ecr_secret: edgeapp-cronjob-ecr-secret-helm
+  ecr_token_command: |
+      aws ecr get-login-password --region ap-northeast-2 && \
+      kubectl delete secret --ignore-not-found {edgeapp_cronjob_ecr_secret} -n {namespace} && \
+      kubectl create secret docker-registry {edgeapp_cronjob_ecr_secret} --docker-server={image_host} --docker-username=AWS --docker-password=$(aws ecr get-login-password --region ap-northeast-2) --namespace={namespace}

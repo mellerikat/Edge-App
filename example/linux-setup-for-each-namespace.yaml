@@ -1,0 +1,10 @@
+global:
+  is_linux: True
+
+env:
+  namespace: default
+  serviceaccount: edge-app
+
+pv:
+  pv_enable: True
+

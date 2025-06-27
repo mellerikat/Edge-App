@@ -1,0 +1,29 @@
+# linux-onpremise-edgeapp.yaml
+env:
+  type: linux
+  cluster: k3s
+  controller_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/controller:3.7.0-rc.1
+  iomanager_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/iomanager:3.7.0-rc.1
+  redis_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/redis:v7.2.3
+  namespace: default
+  serviceaccount: edge-app
+
+pv:
+  pv_enable: True
+
+conductor:
+  host: 10.158.2.243
+  http_protocol: http
+  port: 39008
+  wsprotocol: ws
+  insecure_ip: 10.158.2.243:39011
+
+
+appinfo:
+  data_input_path: linux_onprem_test/input
+  data_output_path: linux_onprem_test/output
+  data_input_policy: copy #'move','copy'
+  data_save_policy: add_utc #'overwrite','add_utc','add_date'
+  enable_result_to_edgecond: True
+  Note: linux-edgeapp-test
+  mount_path: /home

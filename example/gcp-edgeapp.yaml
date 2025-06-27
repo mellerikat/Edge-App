@@ -20,10 +20,10 @@ pv:
   pv_enable: False
 
 conductor:
-  host: svc-edgecond-internal.edge-conductor
-  http_protocol: http
-  port: 31020
-  wsprotocol: ws
+  host: edgecond.mellerikat-dev.com
+  http_protocol: https
+  port: 443
+  wsprotocol: wss
 
 appinfo:
   data_input_path: gcp_test/input/
@@ -32,16 +32,19 @@ appinfo:
   data_save_policy: add_utc #'overwrite','add_utc','add_date'
   enable_result_to_edgecond: False
   Note: gcp-edgeapp-test
-  enable_ecr_token: True
+  ecr_token_enable: True
 
 cronjob:
+  suspend: false
   base_image: asia-northeast3-docker.pkg.dev/nimble-sight-450802-a0/gcr-edgeapp-test/alpine/k8s:1.30.12
   onSchedule: "50 23 12 4 *"
   offSchedule: "50 23 12 4 *"
+  api_server_endpoint: https://gke-0946312b10ff47d3b475dd58c21971d22d83-684332823146.asia-northeast2.gke.goog # DNS endpoint
   gcp_project_id: "nimble-sight-450802-a0"
   gcp_region: "asia-northeast3-c"
   gcp_aws_role: arn:aws:iam::339713051385:role/role-gke-an3-auditdx-dev-gke-edge-app-sa
   edgeapp_cronjob_ecr_secret: edgeapp-cronjob-ecr-secret-helm
+  enable_k8s_api_server_cert: true
   ecr_token_command: |
     curl -k -X POST https://kubernetes.default.svc/api/v1/namespaces/{namespace}/serviceaccounts/{serviceaccount}/token \
             -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" \

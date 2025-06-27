@@ -1,36 +1,36 @@
 # aws-edgeapp.yaml
 env:
   type: aws
-  cluster: eks-an2-meerkat-dev-eks-master                                                     
-  edgeapp_node: ng-an2-meerkat-ws-edge-app-t3-medium                                                                                           
-  alo_node: ng-an2-edgeapp-meerkat-standard 
+  cluster: eks-an2-meerkat-dev-eks-master
+  edgeapp_node: ng-an2-meerkat-ws-edge-app-t3-medium                                                      
+  alo_node: ng-an2-edgeapp-meerkat-standard
   alo_memory: 6500Mi
   storage: s3-an2-meerkat-dev-meerkat
-  controller_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/controller:3.6.0
-  iomanager_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/iomanager:3.6.0
-  redis_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/redis:v7.2.3
-  namespace: edge-app                                                                        
+  controller_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/controller:3.6.0-rc.1
+  iomanager_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/iomanager:3.6.0-rc.1
+  redis_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/ecr-repo-an2-meerkat-dev/edgeapp/amd/redis:v7.2.3
+  namespace: edge-app
   serviceaccount: edge-app
 
 pv:
   pv_enable: True
 
 conductor:
-  host: svc-edgecond-internal.edge-conductor
-  http_protocol: http
-  port: 31020
-  wsprotocol: ws
+  host: edgecond.mellerikat-dev.com
+  http_protocol: https
+  port: 443
+  wsprotocol: wss
 
 appinfo:
-  data_input_path: test/input
-  data_ouput_path: test/output
+  data_input_path: edgeapp_test/input
+  data_ouput_path: edgeapp_test/output
   data_input_policy: copy #'move','copy'
   data_save_policy: add_utc #'overwrite','add_utc','add_date'
-  enable_result_to_edgecond: False
+  enable_result_to_edgecond: True
   Note: aws-test-edgeapp
   #serial_id: meerkat_dev_edgeapp_test #aws-eks-namespace-edgeappname(~64byte)
 
 cronjob:
-  base_image: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/bitnami-kubectl:1.32.3
+  base_image: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/alpine/k8s:1.30.12
   onSchedule: "50 23 12 4 *"
   offSchedule: "50 23 12 4 *"
