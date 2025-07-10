@@ -27,7 +27,7 @@ conductor:
 
 appinfo:
   data_input_path: gcp_test/input/
-  data_ouput_path: gcp_test/output/
+  data_output_path: gcp_test/output/
   data_input_policy: copy #'move','copy'
   data_save_policy: add_utc #'overwrite','add_utc','add_date'
   enable_result_to_edgecond: False
