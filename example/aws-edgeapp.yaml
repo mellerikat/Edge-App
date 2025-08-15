@@ -6,8 +6,8 @@ env:
   alo_node: ng-an2-edgeapp-meerkat-standard
   alo_memory: 6500Mi
   storage: s3-an2-meerkat-dev-meerkat
-  controller_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/controller:3.6.0-rc.1
-  iomanager_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/iomanager:3.6.0-rc.1
+  controller_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/controller:3.7.1
+  iomanager_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/mellerikat/release/edge-app/amd/iomanager:3.7.1
   redis_image_address: 339713051385.dkr.ecr.ap-northeast-2.amazonaws.com/ecr-repo-an2-meerkat-dev/edgeapp/amd/redis:v7.2.3
   namespace: edge-app
   serviceaccount: edge-app
